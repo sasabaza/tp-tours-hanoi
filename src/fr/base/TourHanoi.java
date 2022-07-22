@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import fr.base.models.Disque;
 import fr.base.models.Tour;
+import fr.base.utils.Utils;
 import fr.base.view.DisplayConsole;
 
 /**
@@ -13,11 +14,20 @@ import fr.base.view.DisplayConsole;
 class TourHanoi {
 	
 	private static int count = 0;
+	private static final String CHEMIN_FICHIER;
+	
+	static {
+		count = 0;
+		CHEMIN_FICHIER = "resultat.txt";
+	}
 	
 	/**
 	 * Méthode qui lance le programme
 	 */
 	void run() {
+		
+		Utils.creerFichier(CHEMIN_FICHIER);
+		
 		int nombreDisque = DisplayConsole.nombreDisque();
 		
 		LinkedList<Disque> listDisque = new LinkedList<>();
@@ -30,6 +40,7 @@ class TourHanoi {
 		TourHanoi.deplacementDisques(nombreDisque, listTours.get(0), listTours.get(1), listTours.get(2));
 		
 		DisplayConsole.affichageTotalDeplacement(TourHanoi.count, nombreDisque);
+		Utils.enregistrerTotalDeplacement(nombreDisque, nombreDisque, CHEMIN_FICHIER);
 	}
 	
 	/**
@@ -77,6 +88,7 @@ class TourHanoi {
 			destinationTower.getListDisques().add(disque);
 			
 			DisplayConsole.affichageDeplacement(diskNumber, sourceTower, destinationTower);
+			Utils.enregistrerDeplacement(diskNumber, sourceTower, destinationTower, CHEMIN_FICHIER);
 			TourHanoi.count++;
 		} else {
 			deplacementDisques(diskNumber - 1, sourceTower, auxiliaryTower, destinationTower);
@@ -85,6 +97,7 @@ class TourHanoi {
 			destinationTower.getListDisques().add(disque);
 			
 			DisplayConsole.affichageDeplacement(diskNumber, sourceTower, destinationTower);
+			Utils.enregistrerDeplacement(diskNumber, sourceTower, destinationTower, CHEMIN_FICHIER);
 			
 			deplacementDisques(diskNumber - 1, auxiliaryTower, destinationTower, sourceTower);
 			TourHanoi.count++;

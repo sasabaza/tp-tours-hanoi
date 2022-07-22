@@ -13,9 +13,11 @@ import fr.base.utils.Utils;
 public final class DisplayConsole {
 	
 	private static BufferedReader bufferedReader;
+	private static final String CHEMIN_FICHIER;
 	
 	static {
 		 bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		 CHEMIN_FICHIER = "resultat.txt";
 	}
 	
 	private DisplayConsole() {
@@ -65,6 +67,8 @@ public final class DisplayConsole {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		Utils.enregistrerNomTour("Tour " + nom + " " + tourType, CHEMIN_FICHIER);
 		
 		return nom;
 	}
